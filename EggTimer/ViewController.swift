@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     var secondsPassed: Float = 0.0
     
     var timer = Timer()
-    var player = AVAudioPlayer()
+    var player: AVAudioPlayer!
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var progressBar: UIProgressView!
@@ -41,14 +41,10 @@ class ViewController: UIViewController {
         } else {
             timer.invalidate()
             titleLabel.text = "DONE!"
-            playSound(soundName: "alarm_sound", soundExtension: "mp3")
+            
+            let url = Bundle.main.url(forResource: "alarm_sound", withExtension: "mp3")
+            player = try! AVAudioPlayer(contentsOf: url!)
+            player.play()
         }
     }
-    
-    func playSound(soundName: String, soundExtension: String) {
-        let url = Bundle.main.url(forResource: soundName, withExtension: soundExtension)
-        player = try! AVAudioPlayer(contentsOf: url!)
-        player.play()
-    }
-    
 }
